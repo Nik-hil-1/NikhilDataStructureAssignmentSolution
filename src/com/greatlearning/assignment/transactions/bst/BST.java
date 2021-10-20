@@ -1,78 +1,89 @@
 package com.greatlearning.assignment.transactions.bst;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BST {
-	
+
 	public void formTree(Node root) {
-		
-		ArrayList<Integer> element = new ArrayList<>();
-		
-		storeElement(root, element);
-		element.add(root.key);
-		
-		int size = element.size();
-	
-		Integer[] path = new Integer[size];
-		path = element.toArray(path);
-		
-		MergeSort.sort(path, 0, path.length-1);
-		skewed(path, root, 0);
+
+		Queue<Node> queue = new LinkedList<>();
+
+		inOrder(root, queue);
+
+		Node newroot = null;
+		Node result = null;
+
+		while (queue.size() != 0) {
+
+			int key = queue.poll().key;
+
+			if (newroot == null) {
+
+				newroot = newTree(newroot, key);
+			} else {
+
+				result = newTree(newroot, key);
+			}
+		}
+
+		levelOrder(newroot, queue);
 
 	}
-	
-	boolean storeElement(Node node, ArrayList<Integer> path) {
-		
-		if(node == null)
-			return false;
+
+	void inOrder(Node root, Queue<Node> queue) {
+
+		if (root == null)
+			return;
 		else {
-			
-			if(node.left != null) {
-				
-				path.add(node.left.key);		
-				storeElement(node.left, path);
-			}
-			if(node.right != null) {
-				
-				path.add(node.right.key);
-				storeElement(node.right, path);
-			}
-			
-			return true;
+
+			inOrder(root.left, queue);
+			queue.add(root);
+			inOrder(root.right, queue);
 		}
 	}
-	
-    Node skewed(Integer[] path, Node root, int count) {
-		
-    	int i=0;
-    	Node newnode = root;
-    	Node newroot = null; 	
-    	
-    	while(newnode != null && i<path.length) {
-			
-    		newroot = newnode;
-			if(i == 0) {
-			    newroot.key = path[i];
-			    i++;
-			    System.out.print(newroot.key+" ");
-			    
+
+	void levelOrder(Node root, Queue<Node> queue) {
+
+		queue.add(root);
+
+		while (!queue.isEmpty()) {
+
+			Node tempNode = queue.poll();
+			System.out.print(tempNode.key + " ");
+
+			if (tempNode.left != null) {
+				queue.add(tempNode.left);
 			}
-			else if(path[i] < newroot.key){
-				newroot.left = new Node(path[i]);
-				i++;
-				System.out.print(newroot.left.key+" ");
+			if (tempNode.right != null) {
+				queue.add(tempNode.right);
 			}
-			else {
-				newroot.right = new Node(path[i]);
-				i++;
-				System.out.print(newroot.right.key+" ");
-			}
+
 		}
-    	
-		System.out.println();
-		return newnode;
-				
 	}
-		
-	
+
+	Node newTree(Node root, int key) {
+
+		Node newnode = new Node(key);
+		Node x = root;
+		Node y = null;
+
+		while (x != null) {
+
+			y = x;
+			if (key < x.key)
+				x = x.left;
+			else
+				x = x.right;
+		}
+		if (y == null)
+			y = newnode;
+		else if (key < y.key)
+			y.left = newnode;
+		else
+			y.right = newnode;
+
+		return y;
+	}
+
 }

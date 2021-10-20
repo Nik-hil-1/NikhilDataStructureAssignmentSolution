@@ -23,7 +23,7 @@ public class FloorConstructionDriver {
 			floorsize.add(sc.nextInt());
 		}
 		
-		System.out.println("\nThe order of construction is as follows :\n");
+		System.out.println("\nThe order of construction is as follows :");
 		service.arrange(floorsize, floor);
 		
 	    

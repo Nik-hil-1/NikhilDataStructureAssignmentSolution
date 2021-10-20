@@ -15,7 +15,7 @@ public class FloorConstructionService {
 			if(floor == floorsize.get(j)) {
 				
 				temp.push(floorsize.get(j));
-				System.out.println("Day : "+(j+1));
+				System.out.println("\nDay : "+(j+1));
 				System.out.print(temp.pop()+" ");
 				    
 				if(temp.isEmpty()) {
@@ -25,14 +25,13 @@ public class FloorConstructionService {
 				else {
 					
                     do {
-						
+                    	
+                    	floor--;
 						int check = temp.pop();
 						
-						if(check == floor-1) {
+						if(check == floor) {
 							
-							floor--;
 							System.out.print(check+" ");
-							
 						}
 						else {
 							
@@ -63,65 +62,49 @@ public class FloorConstructionService {
 						 temp.push(floorsize.get(j));
 						 temp.push(check);
 						 
-                         if(j == floorsize.size()-1) {
-						 	 
-						     System.out.println("\nDay : "+(j+1));
-							 display(temp);
+						 if(j == floorsize.size()-1) {
 							 
+							 System.out.println("\nDay : "+(j+1));
+						     display(temp);
+						 }
+						 else {
+							 
+							 System.out.println("\nDay : "+(j+1));
+						     System.out.println(" "); 
 						 }
 					 }
 					 else {
 						 
 						 temp.push(check);
 						 temp.push(floorsize.get(j));
-						 
-						 if(j == floorsize.size()-1) {
+							 
+                         if(j == floorsize.size()-1) {
 							 
 							 System.out.println("\nDay : "+(j+1));
-							 display(temp);
-							 
+						     display(temp);
 						 }
 						 else {
 							 
-							 int check1 = temp.pop();
-							 int check2 = temp.pop();
-							 
-							 if(check1 - check2 == 2) {
-								 
-								 temp.push(check2);
-								 System.out.println("\nDay : "+(j+1));
-								 System.out.println(check1+" ");
-								 
-							 }
-							 else {
-								 
-								 temp.push(check2);
-								 temp.push(check1);
-								 
-								 System.out.println("\nDay : "+(j+1));
-								 System.out.println(" ");
-							 }
-							 
+							 System.out.println("\nDay : "+(j+1));
+						     System.out.println(" "); 
 						 }
-						 
 					 }
 						 
 				 }
 				
 			}
 			
-			
 		}
-		
+	
 	}
 	
 	void display(Stack<Integer> temp) {
 		
 		int size = temp.size();
+		
 		for(int i=0; i<size; i++) {
 			System.out.print(temp.pop()+" ");
 		}
 	}
 	
-
 }
